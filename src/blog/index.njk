@@ -1,0 +1,16 @@
+---
+title: "Blog Posts"
+date: 2026-02-11
+layout: base.njk
+---
+
+# Blog Posts
+
+Here are all the blog posts:
+
+{% for post in collections.blog %}
+  <div class="mb-4">
+    <a href="{{ post.url }}" hx-get="{{ post.url }}" hx-push-url="{{ post.url }}" hx-target="main" hx-select="main" hx-swap="innerHTML">{{ post.data.title }}</a>
+    <span class="text-sm text-gray-600"> - {{ post.data.date }}</span>
+  </div>
+{% endfor %}

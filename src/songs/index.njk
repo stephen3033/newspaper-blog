@@ -1,0 +1,16 @@
+---
+title: "Songs"
+date: 2026-02-11
+layout: base.njk
+---
+
+# Songs
+
+Here are all the song lyrics:
+
+{% for song in collections.songs %}
+  <div class="mb-4">
+    <a href="{{ song.url }}" hx-get="{{ song.url }}" hx-push-url="{{ song.url }}" hx-target="main" hx-select="main" hx-swap="innerHTML">{{ song.data.title }}</a>
+    <span class="text-sm text-gray-600"> - {{ song.data.date }}</span>
+  </div>
+{% endfor %}
