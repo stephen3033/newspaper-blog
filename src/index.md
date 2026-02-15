@@ -1,6 +1,6 @@
 ---
 title: About
-layout: home.njk
+layout: article.njk
 ---
 
 <figure>

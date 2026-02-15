@@ -1,7 +1,7 @@
 ---
 title: Song Lyric Two
 date: 2026-02-08
-layout: base.njk
+layout: article.njk
 ---
 
 # Another Song Title

@@ -1,7 +1,7 @@
 ---
 title: My First Post
 date: 2026-02-11
-layout: base.njk
+layout: article.njk
 ---
 
 # My First Blog Post

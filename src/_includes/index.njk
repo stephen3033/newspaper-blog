@@ -1,0 +1,46 @@
+---
+layout: base.njk
+---
+
+<header class="text-center mb-6">
+  <h1 class="text-3xl font-serif font-bold tracking-tight">{{ title }}</h1>
+  <p class="mt-2 text-sm text-gray-600 uppercase tracking-widest">Index</p>
+</header>
+
+<div class="grid grid-cols-2 gap-8" id="index-grid">
+  <div class="prose prose-serif" id="index-col-1">
+    {% if hero_image %}
+    <figure class="mb-4">
+      <img 
+        src="{{ hero_image }}" 
+        alt="{{ hero_alt | default(title) }}" 
+        class="w-full max-w-xl grayscale contrast-150 brightness-90"
+      >
+      {% if hero_caption %}
+      <figcaption class="text-sm text-gray-600 mt-1 italic text-center">
+        {{ hero_caption }}
+      </figcaption>
+      {% endif %}
+    </figure>
+    {% endif %}
+  </div>
+  
+  <div class="prose prose-serif" id="index-col-2">
+    {% for item in collections[collection_name] %}
+    <article class="border-b border-stone-200 py-3">
+      <a 
+        href="{{ item.url }}" 
+        hx-get="{{ item.url }}" 
+        hx-push-url="{{ item.url }}" 
+        hx-target="main" 
+        hx-select="main" 
+        hx-swap="innerHTML" 
+        class="block hover:bg-stone-50 transition-colors"
+      >
+        <h2 class="text-lg font-serif font-bold tracking-tight hover:underline">{{ item.data.title }}</h2>
+        <p class="text-sm text-gray-600 mt-1">{{ item.data.date | readableDate }}</p>
+      </a>
+    </article>
+    {% endfor %}
+  </div>
+</div>

@@ -19,7 +19,7 @@
             A Chronicle of Thoughts & Creativity
           </p>
         </div>
-        <nav class="flex justify-center" hx-target="main" hx-select="main" hx-swap="innerHTML">
+        <nav class="flex justify-center" hx-target="main" hx-select="#main-content" hx-swap="innerHTML">
           <ul class="flex">
             <li>
               <a
@@ -60,7 +60,7 @@
     </header>
 
     <main class="w-full px-3 sm:px-4 lg:px-6 py-6">
-      <div class="max-w-6xl mx-auto prose prose-serif [&_p]:mb-4 [&_h1+p]:mt-0 [&_h1]:text-3xl [&_h1]:font-serif [&_h1]:tracking-tight [&_h1]:mb-2 [&_h2]:text-xl [&_h2]:font-serif [&_h2]:tracking-tight [&_h2]:mt-4 [&_h2]:mb-1">
+      <div id="main-content" class="max-w-6xl mx-auto">
         {{ content | safe }}
       </div>
     </main>
@@ -90,13 +90,60 @@
         link.classList.toggle('hover:bg-gray-100', !isActive);
       });
     }
+    
+    function balanceIndexColumns() {
+      const col1 = document.getElementById('index-col-1');
+      const col2 = document.getElementById('index-col-2');
+      
+      if (!col1 || !col2) return;
+      
+      const figure = col1.querySelector('figure');
+      const articles = Array.from(col2.querySelectorAll('article'));
+      
+      if (!figure || articles.length === 0) return;
+      
+      const img = figure.querySelector('img');
+      if (!img) return;
+      
+      if (!img.complete || img.naturalHeight === 0) return;
+      
+      const figureHeight = figure.offsetHeight;
+      let col1Height = figureHeight;
+      let col2Height = 0;
+      
+      for (let i = 0; i < articles.length; i++) {
+        const article = articles[i];
+        const articleHeight = article.offsetHeight;
+        
+        if (col2Height + articleHeight > col1Height) {
+          col1.appendChild(article);
+          col1Height += articleHeight;
+        } else {
+          col2Height += articleHeight;
+        }
+      }
+    }
+    
+    function watchIndexImages() {
+      const img = document.querySelector('#index-col-1 img');
+      if (!img) return;
+      
+      if (img.complete && img.naturalHeight > 0) {
+        balanceIndexColumns();
+      } else {
+        img.addEventListener('load', balanceIndexColumns);
+      }
+    }
+    
     updateNavActive();
+    watchIndexImages();
     document.querySelectorAll('.nav-link').forEach(link => {
       link.addEventListener('click', () => {
         setActiveByPath(link.getAttribute('data-nav-path'));
       });
     });
     document.body.addEventListener('htmx:pushedIntoHistory', updateNavActive);
+    document.body.addEventListener('htmx:afterSwap', watchIndexImages);
   </script>
 </body>
 </html>

@@ -1,7 +1,7 @@
 ---
 title: Another Post
 date: 2026-02-10
-layout: base.njk
+layout: article.njk
 ---
 
 # Another Blog Post

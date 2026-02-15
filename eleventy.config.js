@@ -12,6 +12,16 @@ export default function(eleventyConfig) {
     files: "./_site/**/*.css"
   });
 
+  // Date filter: format as "Month Day, Year"
+  eleventyConfig.addFilter("readableDate", (dateString) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric"
+    });
+  });
+
   // Blog collection
   eleventyConfig.addCollection("blog", (collection) => {
     return collection
