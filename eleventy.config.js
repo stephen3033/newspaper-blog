@@ -6,8 +6,11 @@ export const config = {
 };
 
 export default function(eleventyConfig) {
-  eleventyConfig.addPassthroughCopy("src/style.css");
   eleventyConfig.addPassthroughCopy("src/assets");
+  
+  eleventyConfig.setBrowserSyncConfig({
+    files: "./_site/**/*.css"
+  });
 
   // Blog collection
   eleventyConfig.addCollection("blog", (collection) => {
