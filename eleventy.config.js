@@ -1,3 +1,10 @@
+import fs from "fs";
+import path from "path";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 export const config = {
   dir: {
     input: "src",
@@ -7,6 +14,12 @@ export const config = {
 
 export default function(eleventyConfig) {
   eleventyConfig.addPassthroughCopy("src/assets");
+  
+  eleventyConfig.addShortcode("icon", function(iconName, className = "w-6 h-6") {
+    const iconPath = path.resolve(__dirname, "src/assets/icons", `${iconName}.svg`);
+    let data = fs.readFileSync(iconPath);
+    return data.toString().replace("<svg", `<svg class="${className}"`);
+  });
   
   eleventyConfig.setBrowserSyncConfig({
     files: "./_site/**/*.css"

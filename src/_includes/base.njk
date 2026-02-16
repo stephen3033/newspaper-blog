@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>The Loyal Ledger</title>
-  <link rel="icon" type="image/svg+xml" href="/assets/images/logo.svg" />
+  <link rel="icon" type="image/svg+xml" href="/assets/icons/newspaper.svg" />
   <meta name="description" content="Personal blog featuring articles and songs" />
   <meta name="author" content="Stephen Anthony" />
   <meta property="og:title" content="The Loyal Ledger" />
@@ -34,7 +34,7 @@
   <script src="https://unpkg.com/htmx.org@1.9.10"></script>
 </head>
 <body class="min-h-screen bg-gray-100 p-4 flex flex-col">
-  <div class="flex-1 bg-white shadow-[0_0_25px_rgba(0,0,0,0.25)]">
+  <div class="flex-1 bg-white shadow-none sm:shadow-[0_0_25px_rgba(0,0,0,0.25)]">
     <header class="border-b-2 border-stone-300 sticky top-0 bg-white z-40">
       <div class="w-full px-3 sm:px-4 lg:px-6">
         <div class="py-4 text-center border-b border-stone-200">
@@ -45,7 +45,7 @@
             A Chronicle of Thoughts & Creativity
           </p>
         </div>
-        <nav class="flex justify-center" hx-target="main" hx-select="#main-content" hx-swap="innerHTML">
+        <nav class="flex justify-center relative" hx-target="main" hx-select="#main-content" hx-swap="innerHTML">
           <ul class="flex">
             <li>
               <a
@@ -53,9 +53,10 @@
                 hx-get="/"
                 hx-push-url="/"
                 data-nav-path="/"
-                class="nav-link inline-block px-6 py-3 text-xs font-medium uppercase tracking-wider transition-colors duration-200 text-gray-700"
+                class="nav-link inline-flex items-center px-4 sm:px-6 py-3 text-xs font-medium uppercase tracking-wider transition-colors duration-200 text-gray-700"
               >
-                Home
+                {% icon "home", "w-6 h-6 sm:hidden" %}
+                <span class="hidden sm:inline">Home</span>
               </a>
             </li>
             <li>
@@ -64,9 +65,10 @@
                 hx-get="/blog/"
                 hx-push-url="/blog/"
                 data-nav-path="/blog/"
-                class="nav-link inline-block px-6 py-3 text-xs font-medium uppercase tracking-wider transition-colors duration-200 text-gray-700"
+                class="nav-link inline-flex items-center px-4 sm:px-6 py-3 text-xs font-medium uppercase tracking-wider transition-colors duration-200 text-gray-700"
               >
-                Blog
+                {% icon "newspaper", "w-6 h-6 sm:hidden" %}
+                <span class="hidden sm:inline">Blog</span>
               </a>
             </li>
             <li>
@@ -75,12 +77,31 @@
                 hx-get="/songs/"
                 hx-push-url="/songs/"
                 data-nav-path="/songs/"
-                class="nav-link inline-block px-6 py-3 text-xs font-medium uppercase tracking-wider transition-colors duration-200 text-gray-700"
+                class="nav-link inline-flex items-center px-4 sm:px-6 py-3 text-xs font-medium uppercase tracking-wider transition-colors duration-200 text-gray-700"
               >
-                Songs
+                {% icon "musical-note", "w-6 h-6 sm:hidden" %}
+                <span class="hidden sm:inline">Songs</span>
               </a>
             </li>
           </ul>
+          <div class="absolute right-0 top-0 bottom-0 flex items-center gap-3 pr-4 sm:pr-6">
+            <a
+              href="https://github.com/stephen3033"
+              target="_blank"
+              rel="noopener"
+              class="text-gray-500 hover:text-gray-900 transition-colors"
+            >
+              {% icon "github", "w-6 h-6" %}
+            </a>
+            <a
+              href="https://www.linkedin.com/in/stephenanthony3033"
+              target="_blank"
+              rel="noopener"
+              class="text-gray-500 hover:text-blue-600 transition-colors"
+            >
+              {% icon "linkedin", "w-6 h-6" %}
+            </a>
+          </div>
         </nav>
       </div>
     </header>
@@ -118,6 +139,8 @@
     }
     
     function balanceIndexColumns() {
+      if (window.innerWidth < 640) return;
+      
       const col1 = document.getElementById('index-col-1');
       const col2 = document.getElementById('index-col-2');
       
