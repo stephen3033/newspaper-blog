@@ -1,6 +1,7 @@
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
+import markdownIt from "markdown-it";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -14,6 +15,13 @@ export const config = {
 
 export default function(eleventyConfig) {
   eleventyConfig.addPassthroughCopy("src/assets");
+
+  let md = markdownIt({
+    html: true,
+    breaks: true,
+    linkify: true
+  });
+  eleventyConfig.setLibrary("md", md);
   
   eleventyConfig.addShortcode("icon", function(iconName, className = "w-6 h-6") {
     const iconPath = path.resolve(__dirname, "src/assets/icons", `${iconName}.svg`);
